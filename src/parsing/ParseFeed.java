@@ -62,8 +62,6 @@ public class ParseFeed {
 			    	{
 			    		String at = attributes.get(item);
 			    		StringBuffer sb=new StringBuffer(result[i].substring(2));
-			    		//sb=result[i].substring(2);
-			    		//sb.(result[i], 2, result[i].length()-2);
 			    		sb.append(result[i+1], 0, result[i+1].length()-1);
 			    		point.putProperty(at, sb);
 			    		item++;
@@ -212,11 +210,7 @@ public class ParseFeed {
 				routes.add(route);
 			}
 		}
-			
-		
 		return routes;
-		
-		
 		
 	}
 	
