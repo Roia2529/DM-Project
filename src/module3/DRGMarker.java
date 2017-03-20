@@ -17,11 +17,14 @@ import processing.core.PGraphics;
 // in module 5 (i.e. CityMarker extends CommonMarker).  It will cause an error.
 // That's what's expected.
 public class DRGMarker extends CommonMarker {
+	
+	final static String Rank="Charge Rank";
+	
 	public static int TRI_SIZE = 10;  // The size of the triangle marker
 	public static final float THRESHOLD_MODERATE = 18000;
 	public static final float THRESHOLD_LIGHT = 11000;
-	public static final float THRESHOLD_INTERMEDIATE = 10;
-	public static final float THRESHOLD_DEEP = 19;
+	public static final float THRESHOLD_INTERMEDIATE = 12;
+	public static final float THRESHOLD_DEEP = 16;
 	
 	protected float radius;
 	public DRGMarker(Location location) {
@@ -43,27 +46,42 @@ public class DRGMarker extends CommonMarker {
 		// Save previous drawing style
 		float payment=getPaymentNumber();
     	float Poverty = this.getPovertyRateNumber();
+    	int rank = getChargeRank();
 		pg.pushStyle();
 		//Poverty level
 		if (Poverty < THRESHOLD_INTERMEDIATE) {
-			pg.fill(0, 255, 0);
+			pg.fill(0, 255, 0);//green
 		}
 		else if (Poverty > THRESHOLD_DEEP) {
-			pg.fill(255, 0, 0);
+			pg.fill(255, 0, 0);//red
 		}
 		else {
-			pg.fill(0, 0, 255);
+			pg.fill(255, 255, 0);//yellow
 		}
 		
-		//Charge Level
-		if (payment < THRESHOLD_LIGHT) {
-			radius=9;
-		}
-		else if (payment > THRESHOLD_MODERATE) {
-			radius=19;
-		}
-		else {
-			radius=14;
+//		//Charge Level
+//		if (payment < THRESHOLD_LIGHT) {
+//			radius=5;
+//		}
+//		else if (payment > THRESHOLD_MODERATE) {
+//			radius=20;
+//		}
+//		else {
+//			radius=12;
+//		}
+		
+		switch(rank)
+		{
+		case 1:
+			radius = 7;
+		break;
+		case 2:
+			radius = 13;
+		break;
+		case 3:
+			radius = 20;
+		break;
+		
 		}
 		pg.ellipse(x, y, radius, radius);
 		// Restore previous drawing style
@@ -78,7 +96,7 @@ public class DRGMarker extends CommonMarker {
 		
 		pg.pushStyle();
 		pg.fill(255);
-		pg.rect(x-3, y-55,pg.textWidth(Hospital)+6,50);
+		pg.rect(x-3, y-55,pg.textWidth(Hospital)+6,35);
 		pg.fill(0);
 		pg.textSize(12);
 		pg.text(Hospital, x,y-40);
@@ -86,8 +104,6 @@ public class DRGMarker extends CommonMarker {
 		pg.popStyle();
 	
 	}
-	
-	
 	
 	/* Local getters for some city properties.  
 	 */
@@ -113,7 +129,12 @@ public class DRGMarker extends CommonMarker {
 		Object magObj = getProperty(" Average Total Payments ");
     	float Payment = Float.parseFloat(magObj.toString());
     	return Payment;
-		//return Float.parseFloat(getStringProperty(" Average Total Payments "));
+	}
+	private int getChargeRank()
+	{
+		Object magObj = getProperty(DRGMarker.Rank);
+    	int CRank = Integer.parseInt(magObj.toString());
+    	return CRank;
 	}
 
 }

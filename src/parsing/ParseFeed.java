@@ -78,6 +78,13 @@ public class ParseFeed {
 		    		float lat = Float.valueOf(result[17].substring(1, result[17].length()-1));
 		    		float lon = Float.valueOf(result[18].substring(0, result[18].length()-2));
 		    		point.setLocation(new Location(lat,lon));
+		    		item++;
+		    		//Charge vs Poverty Rank
+		    		for(int i=19;i<22;i++)
+			    	{
+			    		at = attributes.get(item++);
+			    		point.putProperty(at, result[i]);
+			    	}
 		    		
 		    	//point = new PointFeature(location);
 				features.add(point);
