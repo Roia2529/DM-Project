@@ -270,6 +270,83 @@ public class ParseFeed {
 
 		return lifeExpMap;
 	}
+
+	public static List<PointFeature> readdata(String path)
+	{
+		String line;
+		String[] result = null;
+		int item=0;
+		int Label = 0;
+		List<PointFeature> features = new ArrayList<PointFeature>();
+		int nofattribute=9;
+		HashMap<Integer,String> attributes= new HashMap<Integer,String>();
+		try{
+		    InputStream fis = new FileInputStream(path);
+		    InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
+		    BufferedReader br = new BufferedReader(isr);
+		    while ((line = br.readLine()) != null)
+			{
+		    	result = line.split(","); //split by tab
+		    	if(Label==0)//first line
+		    	{
+		    		for(int i=0;i<result.length;i++)
+			    	{
+		    			attributes.put(i, result[i]);
+			    	}
+		    		Label=1;
+		    	}
+		    	else
+		    	{
+		    		char[] temp;
+		    		PointFeature point= new PointFeature();
+		    		item=9;
+			    	for(int i=0;i<9;i++)
+			    	{
+			    		String at = attributes.get(i);
+			    		point.putProperty(at, result[i]);
+			    	}
+			    	for(int i=9;i<14;i+=2)
+			    	{
+			    		String at = attributes.get(item);
+			    		StringBuffer sb=new StringBuffer(result[i].substring(2));
+			    		sb.append(result[i+1], 0, result[i+1].length()-1);
+			    		point.putProperty(at, sb);
+			    		item++;
+			    	}
+			    	//County
+			    	String at = attributes.get(item);
+			    	point.putProperty(at, result[15]);
+			    	item++;
+			    	//Poverty rate
+			    	at = attributes.get(item);
+			    	point.putProperty(at, result[16]);
+			    	item++;
+			    	//Location
+		    		float lat = Float.valueOf(result[17].substring(1, result[17].length()-1));
+		    		float lon = Float.valueOf(result[18].substring(0, result[18].length()-2));
+		    		point.setLocation(new Location(lat,lon));
+		    		item++;
+		    		//Charge vs Poverty Rank
+		    		for(int i=19;i<22;i++)
+			    	{
+			    		at = attributes.get(item++);
+			    		point.putProperty(at, result[i]);
+			    	}
+		    		
+		    	//point = new PointFeature(location);
+				features.add(point);
+		    	}
+			}
+		    
+		    br.close();
+		    return features;
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;	
+	}
 	
 	
 
