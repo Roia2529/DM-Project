@@ -1,5 +1,6 @@
 package module3;
 
+import java.awt.event.KeyEvent;
 //Java utilities libraries
 import java.util.ArrayList;
 //import java.util.Collections;
@@ -43,7 +44,7 @@ public class HospitalMap extends PApplet {
 	private UnfoldingMap map;
 	
 	//feed with magnitude 2.5+ Earthquakes
-	private String earthquakesURL = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.atom";
+	//private String earthquakesURL = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.atom";
 	final int yellow = color(255, 255, 0);
     final int red = color(255,0,0);
     final int green = color(0,255,0);
@@ -65,12 +66,10 @@ public class HospitalMap extends PApplet {
 		
 		map.zoomAndPanTo(4, new Location(40.7570769f,-93.8660f));
 	    MapUtils.createDefaultEventDispatcher(this, map);	
-			
-	    // The List you will populate with new SimplePointMarkers
-	    //List<Marker> markers = new ArrayList<Marker>();
 	    
-	    List<PointFeature> DRG = ParseFeed.readdata(this, "Utah470DRG_2.csv");
-	    
+	    //List<PointFeature> DRG = ParseFeed.readdata(this, "Utah470DRG_2.csv");
+	    String filename = "Hospital_County_wted_Povrate_ChargeL.csv";
+	    List<PointFeature> DRG = ParseFeed.read_charge_poverty(this,filename);
 	    
 	    //TODO: Add code here as appropriate
 	    for(PointFeature tempPF: DRG)
@@ -80,7 +79,12 @@ public class HospitalMap extends PApplet {
 	    map.addMarkers(PFmarkers);
 	    
 	}
-	
+	@Override
+	public void keyPressed(KeyEvent e)
+	{
+		if(e.getKeyChar()=='l')
+		map.zoomOut();
+	}
 	@Override
 	public void mouseMoved()
 	{
@@ -145,13 +149,13 @@ public class HospitalMap extends PApplet {
 		
 		fill(0);
 		textSize(14);
-		text("Low",50, 137); 
+		text("Low: <12",50, 137); 
 		text("Medium",50, 177);
-		text("High ",50, 215);
+		text("High: >20",50, 215);
 		
-		text("Cheap",50, 313); 
+		text("Cheap: <=1.0",50, 313); 
 		text("Medium",50, 347);
-		text("Expensive",50, 385);
+		text("Expensive: >=2.0",50, 385);
 	}
 	
 	
