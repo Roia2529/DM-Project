@@ -23,8 +23,8 @@ public class DRGMarker extends CommonMarker {
 	public static int TRI_SIZE = 10;  // The size of the triangle marker
 	public static final float THRESHOLD_MODERATE = 2;
 	public static final float THRESHOLD_LIGHT = 1;
-	public static final float THRESHOLD_INTERMEDIATE = 12;
-	public static final float THRESHOLD_DEEP = 20;
+	public static final float THRESHOLD_Poverty_INTERMEDIATE = 10;
+	public static final float THRESHOLD_Poverty_DEEP = 20;
 	
 	protected float radius;
 	public DRGMarker(Location location) {
@@ -49,10 +49,10 @@ public class DRGMarker extends CommonMarker {
     	float rank = getChargeRank();
 		pg.pushStyle();
 		//Poverty level
-		if (Poverty < THRESHOLD_INTERMEDIATE) {
+		if (Poverty < THRESHOLD_Poverty_INTERMEDIATE) {
 			pg.fill(0, 255, 0);//green
 		}
-		else if (Poverty > THRESHOLD_DEEP) {
+		else if (Poverty > THRESHOLD_Poverty_DEEP) {
 			pg.fill(255, 0, 0);//red
 		}
 		else {

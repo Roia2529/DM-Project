@@ -71,7 +71,6 @@ public class HospitalMap extends PApplet {
 	    String filename = "Hospital_County_wted_Povrate_ChargeL.csv";
 	    List<PointFeature> DRG = ParseFeed.read_charge_poverty(this,filename);
 	    
-	    //TODO: Add code here as appropriate
 	    for(PointFeature tempPF: DRG)
 	    {
 	    	PFmarkers.add(new DRGMarker(tempPF));
@@ -149,7 +148,7 @@ public class HospitalMap extends PApplet {
 		
 		fill(0);
 		textSize(14);
-		text("Low: <12",50, 137); 
+		text("Low: <10",50, 137); 
 		text("Medium",50, 177);
 		text("High: >20",50, 215);
 		
