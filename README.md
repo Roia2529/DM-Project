@@ -3,7 +3,7 @@
 
 ### Data resource
 
-*[Inpatient Prospective Payment System](https://data.cms.gov/Medicare/Inpatient-Prospective-Payment-System-IPPS-Provider/ 97k6-zzx3)
+*[Inpatient Prospective Payment System](https://data.cms.gov/Medicare/Inpatient-Prospective-Payment-System-IPPS-Provider/97k6-zzx3)
 
 *[Poverty levels](http://www.census.gov/did/www/saipe/data/model/tables.html)
 
